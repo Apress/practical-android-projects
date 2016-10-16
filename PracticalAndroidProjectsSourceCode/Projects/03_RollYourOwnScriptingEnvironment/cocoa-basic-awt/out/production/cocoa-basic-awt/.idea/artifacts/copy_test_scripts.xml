@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact build-on-make="true" name="copy-test-scripts">
+    <output-path>$PROJECT_DIR$/out/artifacts</output-path>
+    <root id="root">
+      <element id="file-copy" path="$PROJECT_DIR$/test-scripts/atest1.bas" />
+      <element id="file-copy" path="$PROJECT_DIR$/test-scripts/atest2.bas" />
+    </root>
+  </artifact>
+</component>

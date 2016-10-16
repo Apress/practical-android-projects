@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+      package="org.ljordan.tweetface"
+      android:versionCode="1"
+      android:versionName="1.0">
+    <application android:icon="@drawable/icon" android:label="@string/app_name" >
+        <activity android:name=".TweetFace"
+                  android:label="@string/app_name"
+                  android:launchMode="singleInstance">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            
+            <intent-filter>
+    			<action android:name="android.intent.action.VIEW"/>  
+				<category android:name="android.intent.category.DEFAULT"/>  
+				<category android:name="android.intent.category.BROWSABLE"/>
+				<!-- URL_CALLBACK = "tweetface://twitter" --> 
+				<data android:scheme="tweetface" android:host="twitter"/>
+	    	</intent-filter>
+	    	
+        </activity>
+        
+</application>
+    <uses-permission android:name="android.permission.INTERNET" />
+
+</manifest> 

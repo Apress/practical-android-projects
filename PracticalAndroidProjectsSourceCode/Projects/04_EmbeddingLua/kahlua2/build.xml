@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Kahlua" basedir="." default="all">
+	<property file="local.properties" />
+	<property file="version.properties" />
+
+	<property name="version" value="${lua.version}_${kahlua.major}.${kahlua.minor}.${kahlua.fix}" />
+	
+	<dirname property="baseDir" file="${ant.file}"/>
+	
+	<property name="emma.dir" value="/usr/share/java" />
+
+	<property name="cldc11.src.dir"       value="${baseDir}/cldc11/src"/>
+	<property name="core.src.dir"       value="${baseDir}/core/src"/>
+	<property name="j2se.src.dir"       value="${baseDir}/j2se/src"/>
+	<property name="interpreter.src.dir"       value="${baseDir}/interpreter/src"/>
+
+	<property name="build.dir"     value="${baseDir}/bin"/>
+	<property name="classes.dir"     value="${build.dir}/classes"/>
+
+	<property name="test.dir"       value="${baseDir}/testsuite"/>
+	<property name="test.src.dir"       value="${test.dir}/src"/>
+	<property name="test.build.dir"     value="${test.dir}/bin"/>
+	<property name="test.classes.dir"     value="${test.build.dir}/classes"/>
+	<property name="test.lua.output.dir"     value="${test.build.dir}/lua"/>
+	<property name="test.lua.input.dir"     value="${test.dir}/lua"/>
+	<property name="test.emma.coverage.dir"     value="${test.dir}/coverage"/>
+
+	<path id="cldc11.dependencies">
+        <pathelement path="${classes.dir}/core"/>
+		<pathelement location="${baseDir}/lib/cldcapi11.jar" />
+	</path>
+
+    <path id="j2se.dependencies">
+        <pathelement path="${classes.dir}/core"/>
+    </path>
+
+    <path id="interpreter.dependencies">
+        <path refid="j2se.dependencies" />
+        <pathelement path="${classes.dir}/j2se"/>
+        <pathelement location="${baseDir}/interpreter/lib/jsyntaxpane-0.9.5.jar" />
+    </path>
+
+	<path id="main.classpath">
+		<pathelement path="${classes.dir}/j2se"/>
+        <path refid="j2se.dependencies" />
+	</path>
+
+	<path id="interpreter.classpath">
+		<pathelement path="${classes.dir}/interpreter"/>
+        <path refid="interpreter.dependencies" />
+	</path>
+
+	<path id="test.classpath">
+		<path refid="main.classpath" />
+		<pathelement path="${test.classes.dir}"/>
+	</path>
+
+	<path id="emma.lib" >
+		<pathelement location="${emma.dir}/emma.jar" />
+		<pathelement location="${emma.dir}/emma_ant.jar" />
+	</path>
+	<taskdef resource="emma_ant.properties" classpathref="emma.lib" />
+
+	<!-- Main targets -->
+	<target name="all" depends="package, run-test" />
+	
+	<target name="clean" description="Removes old build files">
+		<delete dir="${build.dir}" failonerror="false"/>
+		<delete dir="${test.build.dir}" failonerror="false"/>
+		<delete dir="${test.classes.dir}" failonerror="false"/>
+	</target>
+
+	<target name="setup">
+		<mkdir dir="${build.dir}"/>
+		<mkdir dir="${classes.dir}/core"/>
+		<mkdir dir="${classes.dir}/j2se"/>
+		<mkdir dir="${classes.dir}/interpreter"/>
+		<mkdir dir="${classes.dir}/cldc11"/>
+		<mkdir dir="${build.dir}/core-src-replaced"/>
+
+		<mkdir dir="${test.build.dir}"/>
+		<mkdir dir="${test.classes.dir}"/>
+		<mkdir dir="${test.lua.output.dir}"/>
+	</target>
+
+	<target name="compile" depends="setup, compile-core, compile-cldc11, compile-j2se, compile-interpreter" description="Compiles Kahlua">
+	</target>
+	
+	<target name="build" depends="compile, build-stdlib" description="Builds Kahlua">
+	</target>
+	
+	<target name="compile-core" depends="setup">
+		<copy todir="${build.dir}/core-src-replaced">
+			<fileset dir="${core.src.dir}" />
+		</copy>
+		<replace dir="${build.dir}/core-src-replaced" replacefilterfile="version.properties">
+		</replace>
+		<javac
+			destdir="${classes.dir}/core"
+			debug="true"
+			target="1.4"
+			source="1.4"
+			classpathref="cldc11.dependencies"
+		>
+			<compilerarg value="-bootclasspath" />
+			<compilerarg value="" />
+
+			<src path="${build.dir}/core-src-replaced"/>
+		</javac>
+	</target>
+
+	<target name="compile-cldc11" depends="compile-core">
+		<javac
+			destdir="${classes.dir}/cldc11"
+			debug="true"
+			target="1.4"
+			source="1.4"
+			classpathref="cldc11.dependencies"
+		>
+			<classpath>
+				<pathelement location="${classes.dir}/core" />
+			</classpath>
+			<compilerarg value="-bootclasspath" />
+			<compilerarg value="" />
+
+			<src path="${cldc11.src.dir}"/>
+		</javac>
+	</target>
+
+	<target name="compile-j2se" depends="compile-core">
+		<javac
+			destdir="${classes.dir}/j2se"
+			debug="true"
+			target="1.5"
+			source="1.5"
+            classpathref="j2se.dependencies"
+		>
+			<src path="${j2se.src.dir}"/>
+		</javac>
+        <copy todir="${classes.dir}/j2se">
+            <fileset dir="${baseDir}/j2se/resources">
+            </fileset>
+        </copy>
+	</target>
+
+	<target name="compile-interpreter" depends="compile-j2se">
+		<javac
+			destdir="${classes.dir}/interpreter"
+			debug="true"
+            classpathref="interpreter.dependencies"
+		>
+			<src path="${interpreter.src.dir}"/>
+		</javac>
+        <copy todir="${classes.dir}/interpreter">
+            <fileset dir="${baseDir}/interpreter/resources">
+            </fileset>
+        </copy>
+	</target>
+
+	<target name="annotation-processor-j2se" depends="compile-j2se">
+		<delete dir="${build.dir}/annotation-tmp" />
+		<mkdir dir="${build.dir}/annotation-tmp" />
+		<javac
+				destdir="${build.dir}/annotation-tmp"
+				debug="on"
+				deprecation="on"
+				optimize="on"
+                classpathref="main.classpath"
+				>
+			<src path="${j2se.src.dir}"/>
+			<compilerarg value="-processor"/>
+			<compilerarg value="se.krka.kahlua.integration.processor.LuaDebugDataProcessor"/>
+		</javac>
+		<move toDir="${classes.dir}/j2se">
+			<fileset dir="${build.dir}/annotation-tmp">
+				<include name="**/*.luadebugdata" />
+			</fileset>
+		</move>
+		<delete dir="${build.dir}/annotation-tmp" />
+	</target>
+
+    <target name="package" depends="setup, build" description="Package the final kahlua jar">
+    	<jar jarfile="${build.dir}/kahlua-${version}-core.jar">
+    		<fileset dir="${classes.dir}/core" />
+    	</jar>
+    	<jar jarfile="${build.dir}/kahlua-${version}-cldc11.jar">
+    		<fileset dir="${classes.dir}/cldc11" />
+    	</jar>
+    	<jar jarfile="${build.dir}/kahlua-${version}-j2se.jar">
+    		<fileset dir="${classes.dir}/j2se" />
+    	</jar>
+    	<jar jarfile="${build.dir}/kahlua-${version}-interpreter.jar">
+    		<fileset dir="${classes.dir}/interpreter" />
+    	</jar>
+    </target>
+
+	<target name="release" depends="setup" description="Create a release zip">
+		<tstamp />
+		<zip zipfile="${build.dir}/kahlua-release-${DSTAMP}.zip">
+			<fileset dir="${baseDir}">
+				<include name="build.xml" />
+				
+				<include name="resources/**" />
+				<include name="lib/**" />
+				<include name="docs/**" />
+				<include name="src/**" />
+
+				<include name="testsuite/**" />
+				<exclude name="testsuite/bin/**" />
+				<exclude name="testsuite/coverage/**" />
+
+				<include name="contrib/j2se-util/**" />
+				<exclude name="contrib/j2se-util/bin/**" />
+
+				<include name="contrib/midlet/resources/**" />
+				<include name="contrib/midlet/src/**" />
+				<include name="contrib/midlet/build.xml" />
+
+				<include name="contrib/midlet-interpreter/src/**" />
+				<include name="contrib/midlet-interpreter/build.xml" />
+
+				<include name="contrib/j2se-interpreter/src/**" />
+				<include name="contrib/j2se-interpreter/run.sh" />
+				<include name="contrib/j2se-interpreter/build.xml" />
+
+				<exclude name="**/.svn/**" />
+			</fileset>
+		</zip>
+	</target>
+
+	<target name="build-stdlib" depends="compile-test">
+		<java classname="LuaC" fork="true" dir="${baseDir}">
+			<classpath location="${instrumented.dir}" />
+			<classpath refid="test.classpath" />
+			
+			<arg value="${baseDir}/core/resources/stdlib.lua" />
+			<arg value="${classes.dir}/core/stdlib.lbc" />
+		</java>
+	</target>
+	
+	<target name="luac">
+		<fail unless="input" message="Syntax: ant luac -Dinput=&lt;file> -Doutput=&lt;file2>" />
+		<fail unless="output" message="Syntax: ant luac -Dinput=&lt;file> -Doutput=&lt;file2>" />
+		<available property="exists" file="${input}" />		
+		<fail unless="exists" message="${input} not found." />
+		<java classname="LuaC" fork="true" dir="${baseDir}">
+			<classpath location="${instrumented.dir}" />
+			<classpath refid="test.classpath" />
+			
+			<arg value="${input}" />
+			<arg value="${output}" />
+		</java>
+	</target>
+	
+	<!-- Test stuff -->
+	<target name="compile-test" depends="setup, compile" description="Compile test classes">
+		<javac
+			destdir="${test.classes.dir}"
+			debug="true"
+			target="1.5"
+			source="1.5"
+			classpathref="main.classpath"
+		>
+			<src path="${test.src.dir}"/>
+		</javac>
+	</target>
+
+    <target name="test-depend" depends="setup, build, compile-test">
+    </target>
+
+	<target name="debug-listen">
+		<property name="debugargs" value="-Xdebug -Xrunjdwp:transport=dt_socket,server=n,address=5005,suspend=y" />
+	</target>
+	
+	<target name="default-debugargs">
+		<property name="debugargs" value="" />
+	</target>
+	
+    <target name="run-interpreter" depends="build" description="Run the gui interpreter">
+		<java classname="se.krka.kahlua.j2se.interpreter.InteractiveShell" fork="true" dir="${baseDir}">
+			<classpath refid="interpreter.classpath" />
+		</java>
+    </target>
+
+    <target name="run-test" depends="test-depend, default-debugargs" description="Run the test-suite">
+		<property name="test.file" value="" />
+		<java classname="Test" fork="true" dir="${baseDir}">
+			<jvmarg line="${debugargs}" />
+			<classpath location="${instrumented.dir}" />
+			<classpath refid="test.classpath" />
+			
+			<arg value="${test.lua.input.dir}" />
+			<arg value="${test.file}" />
+		</java>
+    </target>
+
+	<target name="clean-emma">
+		<delete dir="${test.emma.coverage.dir}" />
+	</target>
+
+	<target name="emma" depends="clean-emma, test-depend" description="Run Emma to get code coverage">
+		<property name="test.file" value="" />
+		<emmajava enabled="true" libclasspathref="emma.lib"
+			classname="Test"
+			classpathref="test.classpath"
+			sort="+class,+method,+name,+block"
+			metrics="method:100,block:90,line:80,class:100"
+		>
+			<arg value="${test.lua.input.dir}" />
+			<arg value="${test.file}" />
+
+			<filter includes="se.krka.kahlua.*" />
+			<sourcepath>
+				<dirset dir="${baseDir}/src" />
+			</sourcepath>
+			<txt outfile="${test.emma.coverage.dir}/coverage.txt" />
+			<xml outfile="${test.emma.coverage.dir}/coverage.xml" />
+			<html outfile="${test.emma.coverage.dir}/coverage.html"  />
+		</emmajava>
+	</target>
+
+	<target name="compile-doclet">
+		<mkdir dir="${build.dir}/doclet"/>
+		<javac
+			destdir="${build.dir}/doclet"
+			debug="true"
+		>
+			<src path="javadoc/src"/>
+		</javac>
+	</target>
+	
+	<target name="javadoc" description="Generate javadoc" depends="compile-doclet">
+		<javadoc 
+				doclet="ExcludeDoclet"
+				docletpath="${build.dir}/doclet"
+				destdir="${build.dir}/javadoc"
+				>
+				<fileset dir="${core.src.dir}" />
+				<fileset dir="${cldc11.src.dir}" />
+				<fileset dir="${j2se.src.dir}" />
+		</javadoc>
+	</target>
+</project>
+
+

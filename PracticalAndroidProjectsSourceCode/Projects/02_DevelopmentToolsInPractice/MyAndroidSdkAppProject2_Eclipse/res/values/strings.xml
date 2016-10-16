@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MyAndroidSdkAppActivity2</string>
+    <string name="default_message">Please enter a message and save it.</string>
+    <string name="label_toasts">I make Toasts!</string>
+    <string name="label_alerts">I make Alerts!</string>
+    <string name="label_notify">I just Notify!</string>
+</resources>

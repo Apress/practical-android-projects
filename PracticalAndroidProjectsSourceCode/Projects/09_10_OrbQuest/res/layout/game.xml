@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:id="@+id/root"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:gravity="center"
+  android:background="@drawable/background" android:orientation="vertical">
+  
+  
+<LinearLayout
+	android:orientation="horizontal"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:paddingBottom="2px"
+	>
+	<TextView
+	      android:layout_width="wrap_content" 
+	      android:text="Turns: " 
+	      android:layout_height="wrap_content"
+	      android:textSize="24px"
+	      android:textStyle="bold"
+	      android:paddingBottom="5px"
+	      android:textColor="#FFFFFF"
+	      android:shadowColor="#000000"
+	      android:shadowRadius="2.0"
+	      android:shadowDx="1.0"
+	      android:shadowDy="1.0"
+	      />
+	<TextView android:id="@+id/turnsTextView" 
+	      android:layout_width="wrap_content" 
+	      android:text="10" 
+	      android:layout_height="wrap_content"
+	      android:textSize="24px"
+	      android:textStyle="bold"
+	      android:textColor="#FFFFFF"
+	      android:shadowColor="#000000"
+	      android:shadowRadius="2.0"
+	      android:shadowDx="1.0"
+	      android:shadowDy="1.0"
+	      />
+	<TextView
+	      android:layout_width="wrap_content" 
+	      android:text="Score: " 
+	      android:layout_height="wrap_content"
+	      android:textSize="24px"
+	      android:textStyle="bold"
+	      android:textColor="#FFFFFF"
+	      android:shadowColor="#000000"
+	      android:shadowRadius="2.0"
+	      android:shadowDx="1.0"
+	      android:shadowDy="1.0"
+	      />
+	<TextView android:id="@+id/scoreTextView" 
+	      android:layout_width="wrap_content" 
+	      android:text="10" 
+	      android:layout_height="wrap_content"
+	      android:textSize="24px"
+	      android:textStyle="bold"
+	      android:textColor="#FFFFFF"
+	      android:shadowColor="#000000"
+	      android:shadowRadius="2.0"
+	      android:shadowDx="1.0"
+	      android:shadowDy="1.0"
+	      />
+
+</LinearLayout>
+<view class="org.ljordan.orb_quest.GameView"
+	  android:id="@+id/gameView"
+	  android:layout_width="wrap_content" 
+	  android:layout_height="wrap_content"
+/>
+
+</LinearLayout>

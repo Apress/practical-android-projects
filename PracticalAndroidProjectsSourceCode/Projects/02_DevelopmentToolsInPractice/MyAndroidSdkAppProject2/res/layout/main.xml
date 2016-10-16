@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_main"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <TextView  
+        android:layout_width="fill_parent" 
+        android:layout_height="wrap_content" 
+        android:text="Howdy Android World! Nice to see you!"
+    />
+    <Button
+        android:id="@+id/cmd_silly_exit_button"
+        android:layout_width="96px"
+        android:layout_height="wrap_content"
+        android:text="Silly Exit Button"
+    />
+    <Button
+        android:id="@+id/cmd_save_message"
+        android:layout_width="96px"
+        android:layout_height="wrap_content"
+        android:text="Save Message"
+    />
+    <EditText
+        android:id="@+id/txt_message"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+    </EditText>
+    <Button
+        android:id="@+id/cmd_make_button"
+        android:layout_width="192px"
+        android:layout_height="wrap_content"
+        android:text="Button Maker Button"
+    />
+</LinearLayout>

@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="libs">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/libs/kahlua-5.1_2.0.0-core.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/kahlua-5.1_2.0.0-j2se.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

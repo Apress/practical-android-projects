@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CocoaDroid</string>
+    <string name="app_desc">CocoaDroid - BASIC for Android</string>
+    <string name="app_copy_cocoabasic">CocoaBASIC Version 1.0 Copyright (C) 1996 Chuck McManis. All Rights Reserved.</string>
+    <string name="app_copy_cocoadroid">CocoaDroid Android Port Copyright (C) 2010 Pieter Greyling. All Rights Reserved.</string>
+    <string name="app_usage_01">Type in BASIC commands, scripts or programs and press Enter...</string>
+    <string name="app_usage_02">Save and reload your session with Save and Load.</string>
+    <string name="app_usage_03">Clear the buffers with Clear.</string>
+    <string name="file_name_scratch_input">cocoadroid_scratch_input.txt"</string>
+    <string name="file_name_scratch_output">"cocoadroid_scratch_output.txt"</string>
+    <string name="file_name_work">"cocoadroid_work.txt"</string>
+    <string name="file_name_samples">"program_templates/cocoadroid_basic_templates.bas"</string>
+    <string name="menu_work_load">Load Work</string>
+    <string name="menu_work_save">Save Work</string>
+    <string name="menu_samples_load">Load Samples</string>
+    <string name="menu_app_about">About CocoaDroid</string>
+    <string name="title_samples_file_load">Samples File Load</string>
+    <string name="title_scratch_files_load">Scratch Files Load</string>
+    <string name="title_scratch_files_save">Scratch Files Save</string>
+    <string name="title_work_file_load">Work File Load</string>
+    <string name="title_work_file_save">Work File Save</string>
+    <string name="exception_on_samples_file_load">The Samples File could not be loaded! Please check your CocoaDroid installation.</string>
+    <string name="exception_on_scratch_files_load">The Scratch Files could not be loaded! Save first.</string>
+    <string name="exception_on_scratch_files_save">The Scratch Files could not be saved!</string>
+    <string name="exception_on_work_file_load">The Work File could not be loaded! Save Work first.</string>
+    <string name="exception_on_work_file_save">The Work File could not be saved!</string>
+</resources>

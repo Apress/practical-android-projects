@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/scroll_view_main"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:fillViewport="true"
+        >
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:orientation="vertical"
+                  android:layout_width="fill_parent"
+                  android:layout_height="fill_parent"
+            >
+        <EditText
+                android:id="@+id/txt_input"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="vertical">
+        </EditText>
+        <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:drawable/bottom_bar"
+                android:gravity="center_vertical">
+            <Button
+                    android:id="@+id/cmd_enter"
+                    android:layout_width="0dip"
+                    android:layout_weight="2.0"
+                    android:layout_height="wrap_content"
+                    android:text="Enter"/>
+            <Button
+                    android:id="@+id/cmd_load_scratch"
+                    android:layout_width="0dip"
+                    android:layout_weight="1.0"
+                    android:layout_height="wrap_content"
+                    android:text="Load"/>
+            <Button
+                    android:id="@+id/cmd_save_scratch"
+                    android:layout_width="0dip"
+                    android:layout_weight="1.0"
+                    android:layout_height="wrap_content"
+                    android:text="Save"/>
+            <Button
+                    android:id="@+id/cmd_clear"
+                    android:layout_width="0dip"
+                    android:layout_weight="1.0"
+                    android:layout_height="wrap_content"
+                    android:text="Clear"/>
+        </LinearLayout>
+        <EditText
+                android:id="@+id/txt_output"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="vertical">
+        </EditText>
+        <ListView
+                android:id="@+id/lst_output"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                />
+    </LinearLayout>
+</ScrollView>
+
+

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">KahluaDroid</string>
+  <string name="app_version">1.0.0</string>
+  <string name="app_desc">KahluaDroid - Lua on Android</string>
+  <string name="file_name_snippets">program_templates/lua_snippets.lua</string>
+  <string name="button_run_async_text_wait">Run Async</string>
+  <string name="button_run_async_text_busy">Running Async...</string>
+  <string name="button_run_sync_text_wait">Run on GUI Thread</string>
+  <string name="button_run_sync_text_busy">Running Sync...</string>
+</resources>

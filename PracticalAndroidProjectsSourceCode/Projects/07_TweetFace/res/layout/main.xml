@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:a="http://schemas.android.com/apk/res/android"
+    a:orientation="vertical"
+    a:layout_width="fill_parent"
+    a:layout_height="fill_parent"
+    a:background="#BBBBBB"
+    >
+	<TextView
+	    a:layout_width="fill_parent" 
+	    a:layout_height="wrap_content" 
+	    a:text="Last Tweet by lucasljordan:"
+	    a:textColor="#000000"
+	    a:textSize="18px"
+	    a:layout_margin="5px"
+	    />
+	<TextView
+		a:id="@+id/tweetView"  
+	    a:layout_width="fill_parent" 
+	    a:layout_height="wrap_content" 
+	    a:text="Loading Tweet..."
+	    a:textColor="#000000"
+	    a:background="#FFFFFF"
+	    a:padding="5px"
+	    a:layout_margin="5px"
+	    />
+	 <TextView
+	    a:layout_width="fill_parent" 
+	    a:layout_height="wrap_content" 
+	    a:text="Actions:"
+	    a:textColor="#000000"
+	    a:textSize="18px"
+	    a:layout_margin="5px"
+	    />
+	<LinearLayout 
+		a:orientation="horizontal"
+		a:layout_width="fill_parent"
+		a:layout_height="wrap_content"
+		>
+		<Button
+			a:text="Login To Twitter"
+			a:id="@+id/loginTwitterButton"
+			a:layout_width="wrap_content"
+			a:layout_height="wrap_content"
+			/>
+		<Button
+			a:text="Login To Faceook"
+			a:id="@+id/loginFacebookButton"
+			a:layout_width="wrap_content"
+			a:layout_height="wrap_content"
+			/>	
+	</LinearLayout>
+	 <TextView
+	    a:layout_width="fill_parent" 
+	    a:layout_height="wrap_content" 
+	    a:text="Status:"
+	    a:textColor="#000000"
+	    a:textSize="18px"
+	    a:layout_margin="5px"
+	    />
+	    <TextView
+			a:id="@+id/statusView"  
+		    a:layout_width="fill_parent" 
+		    a:layout_height="wrap_content" 
+		    a:text="Application Loaded..."
+		    a:textColor="#000000"
+		    a:background="#FFFFFF"
+		    a:padding="5px"
+		    a:layout_margin="5px"
+	    />
+	    <LinearLayout
+		    a:id="@+id/actionLayout"
+			a:orientation="horizontal"
+			a:layout_width="fill_parent"
+			a:layout_height="wrap_content"
+			>
+			<Button
+				a:text="Reply On Twitter"
+				a:id="@+id/replyOnTwitterButton"
+				a:layout_width="wrap_content"
+				a:layout_height="wrap_content"
+				a:enabled="false"
+				/>
+			<Button
+				a:text="Write On Facebook Wall"
+				a:id="@+id/facebookWallButton"
+				a:layout_width="wrap_content"
+				a:layout_height="wrap_content"
+				a:enabled="false"
+				/>	
+		</LinearLayout>
+		<TextView
+	    a:layout_width="fill_parent" 
+	    a:layout_height="wrap_content" 
+	    a:text="TweetFace is a demo application showing how to interact with REST web services, including Twitter and Facebook"
+	    a:textColor="#000000"
+	    a:textSize="18px"
+	    a:layout_marginTop="30px"
+	    a:layout_marginLeft="5px"
+	    a:layout_marginRight="5px"
+	    />
+</LinearLayout>

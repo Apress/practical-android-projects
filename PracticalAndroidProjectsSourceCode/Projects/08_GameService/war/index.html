@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- The HTML 4.01 Transitional DOCTYPE declaration-->
+<!-- above set at the top of the file will set     -->
+<!-- the browser's rendering engine into           -->
+<!-- "Quirks Mode". Replacing this declaration     -->
+<!-- with a "Standards Mode" doctype is supported, -->
+<!-- but may lead to some differences in layout.   -->
+
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Hello App Engine</title>
+  </head>
+
+  <body>
+    <h1>Handy Development Links</h1>
+	
+    <table>
+      <tr>
+        <td style="font-weight:bold;">Add High Scores:</td>        
+      </tr>
+      <tr>
+        <td><a href="add_high_score?highscore=%7B%22username%22%3A%22ljordan%22%2C%22score%22%3A50%2C%22longitude%22%3A-77.67%2C%22latitude%22%3A43.12%2C%22date%22%3A12345678%2C%22gameName%22%3A%22orb+quest%22%7D">Add Score: ljordan(50)</a></td>
+      </tr>
+      <tr>
+        <td><a href="add_high_score?highscore=%7B%22username%22%3A%22ljordan%22%2C%22score%22%3A100%2C%22longitude%22%3A-77.67%2C%22latitude%22%3A43.12%2C%22date%22%3A12345678%2C%22gameName%22%3A%22orb+quest%22%7D">Add Score: ljordan(100)</a></td>
+      </tr>
+      <tr>
+        <td><a href="add_high_score?highscore=%7B%22username%22%3A%22ljordan%22%2C%22score%22%3A200%2C%22longitude%22%3A-77.67%2C%22latitude%22%3A43.12%2C%22date%22%3A12345678%2C%22gameName%22%3A%22orb+quest%22%7D">Add Score: ljordan(200)</a></td>
+      </tr>
+      <tr>
+        <td><a href="add_high_score?highscore=%7B%22username%22%3A%22larry%22%2C%22score%22%3A34%2C%22longitude%22%3A-77.67%2C%22latitude%22%3A43.12%2C%22date%22%3A12123%2C%22gameName%22%3A%22happy cards%22%7D">Add Score: larry(34)</a></td>
+      </tr>
+      <tr>
+        <td><a href="add_high_score?highscore=%7B%22username%22%3A%22larry%22%2C%22score%22%3A134%2C%22longitude%22%3A-77.67%2C%22latitude%22%3A42.12%2C%22date%22%3A12123%2C%22gameName%22%3A%22happy cards%22%7D">Add Score: larry(134)</a></td>
+      </tr>
+      <tr>
+        <td><a href="add_high_score?highscore=%7B%22username%22%3A%22debra%22%2C%22score%22%3A270%2C%22longitude%22%3A-77.75%2C%22latitude%22%3A43.12%2C%22date%22%3A12123%2C%22gameName%22%3A%22orb+quest%22%7D">Add Score: debra(270)</a></td>
+      </tr>
+      <tr>
+      	<td style="font-weight:bold;">Query High Scores:</td>
+      </tr>
+      <tr>
+      	<td><a href="query_high_scores">All</a></td>
+      </tr>
+      <tr>
+      	<td><a href="query_high_scores?username=ljordan">Just ljordan's scores'</a></td>
+      </tr>
+      <tr>
+      	<td><a href="query_high_scores?game_name=orb%20quest">Just scores from orb quest</a></td>
+      </tr>
+      <tr>
+      	<td><a href="query_high_scores?game_name=orb%20quest&username=ljordan">ljordan's orb quest scores'</a></td>
+      </tr>
+      <tr>
+      	<td><a href="query_high_scores?game_name=orb%20quest&username=ljordan&gtr_score=100">ljordan's orb quest scores' higher then 100</a></td>
+      </tr>
+      <tr>
+      	<td><a href="query_high_scores?game_name=orb%20quest&username=ljordan&count=2">ljordan's best two orb quest scores'</a></td>
+      </tr>
+      <tr>
+      	<td><a href="query_high_scores?count=2&gtr_lat=-78&lst_lat=-76&grt_lon=42&lst_lon=44&gtr_score=100&lst_score=300&username=ljordan&game_name=orb%20quest">Every Param (causes error!)</a></td>
+      </tr>
+    </table>
+  </body>
+</html>

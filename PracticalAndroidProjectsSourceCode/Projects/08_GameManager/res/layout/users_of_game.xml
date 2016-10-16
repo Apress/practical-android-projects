@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent">
+  
+  <TextView
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    android:text="Enter A Username and a Game Name"
+    android:gravity="center_vertical|center_horizontal"
+    android:textSize="20px"
+    />
+    <LinearLayout
+	  xmlns:android="http://schemas.android.com/apk/res/android"
+	  android:orientation="horizontal"
+	  android:layout_width="fill_parent"
+	  android:layout_height="wrap_content">
+	    <TextView
+	    android:layout_width="wrap_content" 
+	    android:layout_height="wrap_content" 
+	    android:text="Username: "
+	    android:textSize="14px"
+	    />
+	    <EditText
+	    android:id="@+id/usernameTextEdit"
+	    android:layout_width="fill_parent" 
+	    android:layout_height="wrap_content" 
+	    android:text="ljordan"
+	    android:textSize="14px"
+	    />
+    </LinearLayout>
+    
+    <LinearLayout
+	  xmlns:android="http://schemas.android.com/apk/res/android"
+	  android:orientation="horizontal"
+	  android:layout_width="fill_parent"
+	  android:layout_height="wrap_content">
+	    <TextView
+	    android:layout_width="wrap_content" 
+	    android:layout_height="wrap_content" 
+	    android:text="Game Name: "
+	    android:textSize="14px"
+	    />
+	    <EditText
+	    android:id="@+id/gamenameTextEdit"
+	    android:layout_width="fill_parent" 
+	    android:layout_height="wrap_content" 
+	    android:text="orb quest"
+	    android:textSize="14px"
+	    />
+    </LinearLayout>
+  	<Button
+    	android:id="@+id/doGet"
+   		android:layout_width="fill_parent" 
+  	    android:layout_height="wrap_content" 
+        android:text="View Top Ten Scores"
+    />
+    <TableLayout
+  		android:id="@+id/tableLayout"
+  		android:layout_width="fill_parent" 
+  	  android:layout_height="fill_parent"
+    />
+  
+</LinearLayout>
+
+  

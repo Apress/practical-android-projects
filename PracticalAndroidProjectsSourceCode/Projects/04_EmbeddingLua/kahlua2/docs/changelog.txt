@@ -1,0 +1,8 @@
+Kahlua 2
+----------
+* Removed "next" and reworked tables entirely.
+* Removed __mode to support weak tables.
+* Removed lua 5.1 table semantics:
+  * -0 == 0 for keys
+  * not allowing null keys / NaN keys
+

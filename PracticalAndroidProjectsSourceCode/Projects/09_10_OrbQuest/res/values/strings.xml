@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">Hello World, OrbQuestActivity!</string>
+    <string name="app_name">Orb Quest</string>
+    <string name="play_game">Play Orb Quest</string>
+    <string name="view_highscores">View High Scores</string>
+    <string name="view_about">About</string>
+    <string name="about_text">Orb Quest is an application written in conjunction with the book Practical Android Projects, by Lucas Jordan and Pieter Greyling, publish by Apress. This application demonstrates different techniques for creating animated content. To play Orb Quest, select any two orbs to trade place. If a row or a column of orbs is all the same color, they are whisked away and your score is increased. See how many orbs you can remove in 10 turns.</string>
+    <string name="about_text_title">About Orb Quest</string>
+</resources>

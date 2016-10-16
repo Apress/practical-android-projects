@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:id="@+id/dialogRoot"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent" 
+  android:orientation="vertical" 
+  android:gravity="center"
+  android:padding="20px"
+  android:background="#333333"
+  >
+	<TextView 
+		android:text="Share Your Score With The World?"
+		android:textColor="#FBB040"
+		android:textStyle="bold"
+		android:textSize="24px"
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content"/>
+	<LinearLayout 
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content"
+		android:orientation="horizontal" 
+  		android:gravity="center">
+		<TextView 
+			android:text="Player Name: "
+			android:textColor="#FBB040"
+			android:textStyle="bold"
+			android:textSize="18px"
+			android:layout_width="wrap_content" 
+			android:layout_height="wrap_content"/>
+		<EditText 
+			android:text="User Name" 
+			android:id="@+id/playerNameEditText" 
+			android:layout_width="wrap_content" 
+			android:layout_height="wrap_content"/>
+	</LinearLayout>
+	<LinearLayout 
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content"
+		android:orientation="horizontal" 
+  		android:gravity="center">
+  		<Button
+			android:id="@+id/noButton"
+			android:text="No"
+			android:textSize="24px"
+			android:textStyle="bold"
+			android:layout_width="fill_parent" 
+			android:layout_height="wrap_content"
+		/>
+		<Button
+			android:id="@+id/yesButton"
+			android:text="Yes"
+			android:textSize="24px"
+			android:textStyle="bold"
+			android:layout_width="fill_parent" 
+			android:layout_height="wrap_content"
+		/>
+	</LinearLayout>
+
+</LinearLayout>

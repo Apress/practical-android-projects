@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+            android:id="@+id/menu_itm_work_load"
+            android:icon="@drawable/mnu_load_work"
+            android:title="@string/menu_work_load">
+    </item>
+    <item
+            android:id="@+id/menu_itm_work_save"
+            android:icon="@drawable/mnu_save_work"
+            android:title="@string/menu_work_save">
+    </item>
+    <item
+            android:id="@+id/menu_itm_samples_load"
+            android:icon="@drawable/mnu_load_samples"
+            android:title="@string/menu_samples_load">
+    </item>
+    <item
+            android:id="@+id/menu_itm_app_about"
+            android:icon="@drawable/mnu_about"
+            android:title="@string/menu_app_about">
+    </item>
+</menu>

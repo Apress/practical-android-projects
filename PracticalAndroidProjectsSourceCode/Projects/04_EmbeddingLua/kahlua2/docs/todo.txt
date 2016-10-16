@@ -1,0 +1,28 @@
+Bugs
+-----
+
+
+Todo
+-----
+
+* Implement a debugger
+* Compile and obfuscate midlet to investigate minimum footprint.
+* Add an object browser to the interpreter
+* Add the profiler to the interpreter
+* Add a KahluaVM as a typical example setup 
+
+* Integrate with Kahlua-test
+ 
+* Add easier object introspection, i.e. methods(obj)
+* Add callback for when unknown classes appear (maybe)
+
+MAYBE
+
+* Speed up the report building
+
+* Create a proper manual
+
+* Major change: Implement metatables per object instead of per class for userdata.
+* Major change: Implement a LuaUserdata class, that contains environment, metatable
+and a reference to a real java object.
+

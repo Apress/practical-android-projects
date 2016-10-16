@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 width="100%" height="100%"
+		 color="0xFFFFFF"
+		 creationComplete="init()"
+		 resize="layoutOrbs()"
+		 >
+	
+	<fx:Declarations>
+		<s:Animate id="scaleDownAnimate" >
+			<s:motionPaths>
+				<s:MotionPath property="scaleX">
+					<s:keyframes>
+						<s:Keyframe time="0" value="{orbScale}"/>
+						<s:Keyframe time="500" value="{orbScale/4}"/>
+					</s:keyframes>
+				</s:MotionPath>
+				<s:MotionPath id="scaleYPath" property="scaleY">
+					<s:keyframes>
+						<s:Keyframe time="0" value="{orbScale}"/>
+						<s:Keyframe time="500" value="{orbScale/4}"/>
+					</s:keyframes>
+				</s:MotionPath>
+			</s:motionPaths>
+		</s:Animate>
+		
+		<s:Animate id="scaleUpAnimateFirst" >
+			<s:motionPaths>
+				<s:MotionPath property="scaleX">
+					<s:keyframes>
+						<s:Keyframe time="0" value="{orbScale/4}"/>
+						<s:Keyframe time="500" value="{orbScale}"/>
+					</s:keyframes>
+				</s:MotionPath>
+				<s:MotionPath property="scaleY">
+					<s:keyframes>
+						<s:Keyframe time="0" value="{orbScale/4}"/>
+						<s:Keyframe time="500" value="{orbScale}"/>
+					</s:keyframes>
+				</s:MotionPath>
+			</s:motionPaths>
+		</s:Animate>
+		
+		<s:Animate id="scaleUpAnimateSecond" >
+			<s:motionPaths>
+				<s:MotionPath property="scaleX">
+					<s:keyframes>
+						<s:Keyframe time="0" value="{orbScale/4}"/>
+						<s:Keyframe time="500" value="{orbScale}"/>
+					</s:keyframes>
+				</s:MotionPath>
+				<s:MotionPath property="scaleY">
+					<s:keyframes>
+						<s:Keyframe time="0" value="{orbScale/4}"/>
+						<s:Keyframe time="500" value="{orbScale}"/>
+					</s:keyframes>
+				</s:MotionPath>
+			</s:motionPaths>
+		</s:Animate>
+		
+		<s:Animate id="swapAnimateFirst">
+			<s:motionPaths>
+				<s:MotionPath property="x">
+					<s:keyframes>
+						<s:Keyframe time="0" value="{firstOrb.x}"/>
+						<s:Keyframe time="500" value="{secondOrb.x}"/>
+					</s:keyframes>
+				</s:MotionPath>
+				<s:MotionPath property="y">
+					<s:keyframes>
+						<s:Keyframe time="0" value="{firstOrb.y}"/>
+						<s:Keyframe time="500" value="{secondOrb.y}"/>
+					</s:keyframes>
+				</s:MotionPath>
+			</s:motionPaths>
+		</s:Animate>
+		
+		<s:Animate id="swapAnimateSecond">
+			<s:motionPaths>
+				<s:MotionPath property="x">
+					<s:keyframes>
+						<s:Keyframe time="0" value="{secondOrb.x}"/>
+						<s:Keyframe time="500" value="{firstOrb.x}"/>
+					</s:keyframes>
+				</s:MotionPath>
+				<s:MotionPath property="y">
+					<s:keyframes>
+						<s:Keyframe time="0" value="{secondOrb.y}"/>
+						<s:Keyframe time="500" value="{firstOrb.y}"/>
+					</s:keyframes>
+				</s:MotionPath>
+			</s:motionPaths>
+		</s:Animate>
+		
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import flashx.textLayout.formats.Float;
+			import mx.collections.ArrayCollection;
+			import mx.core.IVisualElement;
+			import mx.events.EffectEvent;
+			import spark.effects.Animate;
+			import spark.effects.animation.Keyframe;
+			import spark.effects.animation.MotionPath;
+			import spark.primitives.BitmapImage;
+		
+			[Embed(source="images/blue_orb.png")]
+			[Bindable]
+			public var blueOrbImage:Class;
+			[Embed(source="images/green_orb.png")]
+			[Bindable]
+			public var greenOrbImage:Class;
+			[Embed(source="images/red_orb.png")]
+			[Bindable]
+			public var redOrbImage:Class;
+			private var images:ArrayCollection = new ArrayCollection();
+			private var orbsAdded:Boolean = false;
+			private var numColsAndRows:int = 5;
+			private var imageWidth:int = 512;
+			[Bindable]
+			private var orbScale:Number = 0.1;
+			[Bindable]
+			private var firstOrb:Orb;
+			[Bindable]
+			private var secondOrb:Orb;
+			[Bindable]
+			private var score:int;
+			[Bindable]
+			private var highScore:int;
+			
+			private var sharedObj:SharedObject;
+			
+			public function init():void{
+				sharedObj = SharedObject.getLocal("myTasks");
+				if (sharedObj.size > 0) {
+					highScore = sharedObj.data.highScore;
+				}
+
+				scaleDownAnimate.addEventListener(EffectEvent.EFFECT_END, scaleDownDone);
+				swapAnimateSecond.addEventListener(EffectEvent.EFFECT_END, swapDone);
+				scaleUpAnimateSecond.addEventListener(EffectEvent.EFFECT_END, scaleUpDone);
+				
+				images.addItem(blueOrbImage);
+				images.addItem(greenOrbImage);
+				images.addItem(redOrbImage);
+				
+				
+				for (var i:int=0;i<numColsAndRows*numColsAndRows;i++){
+					var image:BitmapImage = new BitmapImage();
+					image.source = randomImage();
+					var orb:Orb = new Orb(image);
+					orb.scaleX = orbScale;
+					orb.scaleY = orbScale;
+				 	gameGroup.addElement(orb);
+				}
+				orbsAdded = true;
+				layoutOrbs();
+			}
+			
+			private function clicked(event:MouseEvent):void{
+				if (!isAnimating()){
+					
+					trace("x: " + event.localX + " y: " + event.localY + " c: " + event.target.toString());
+					
+					var col:int = getColOrRowFromCoord(event.localX);
+					var row:int = getColOrRowFromCoord(event.localY);
+					
+					var index:int = getIndexFromCoord(col, row);
+					var orb:Orb = gameGroup.getElementAt(index) as Orb;
+					
+					if (firstOrb){
+						if (firstOrb != orb){
+							secondOrb = orb;
+							scaleDownAnimate.target = orb;
+							scaleDownAnimate.play();
+						}
+					} else {
+						firstOrb = orb;
+						scaleDownAnimate.target = orb;
+						scaleDownAnimate.play();
+					}
+				}
+			}
+			
+			private function layoutOrbs():void{
+				if (orbsAdded && !isAnimating()){
+					
+					var size:int = Math.min(this.parent.width, this.parent.height) - 40;
+					
+					gameGroup.height = size;
+					gameGroup.width = size;
+					
+					var cellSize:int = size/numColsAndRows;
+					orbScale = cellSize/imageWidth;  
+					
+					for (var col:int=0;col<numColsAndRows;col++){
+						for (var row:int=0;row<numColsAndRows;row++){
+							var index:int = getIndexFromCoord(col, row);
+						    var orb:Orb = gameGroup.getElementAt(index) as Orb;
+							
+							orb.scaleX = orbScale;
+							orb.scaleY = orbScale;
+							if (orb == firstOrb){
+								orb.scaleX = orbScale/4;
+								orb.scaleY = orbScale/4;	
+							}
+							
+							orb.x = col*cellSize + cellSize/2;
+							orb.y = row*cellSize + cellSize/2;
+						}
+					}
+					
+				}
+			}
+			
+			private function getIndexFromCoord(col:int,row:int):int{
+				//Adding 1 because we don't want the Rect.
+				return row*numColsAndRows + col + 1;
+			}
+			
+			private function getColOrRowFromCoord(coord:int):int{
+				var colOrRow:int = coord/(gameGroup.width/numColsAndRows);
+				if (colOrRow < 0){
+					return 0;
+				} else if (colOrRow > numColsAndRows - 1){
+					return numColsAndRows - 1;
+				} else {
+					return colOrRow;
+				}
+			}
+			
+			private function randomImage():Object{
+				var index:int = Math.random()*3;
+				return images.getItemAt(index);
+			}
+			
+			
+			
+			private function isAnimating():Boolean{
+				return scaleDownAnimate.isPlaying || swapAnimateFirst.isPlaying || swapAnimateSecond.isPlaying ||scaleUpAnimateFirst.isPlaying || scaleUpAnimateSecond.isPlaying;
+			}
+			
+			private function scaleDownDone(event:EffectEvent):void{
+				if (firstOrb && secondOrb){
+					swapAnimateFirst.target = firstOrb;
+					swapAnimateFirst.play();
+					
+					swapAnimateSecond.target = secondOrb;
+					swapAnimateSecond.play();
+				}
+			}
+			
+			private function swapDone(event:EffectEvent):void{
+				scaleUpAnimateFirst.target = firstOrb;
+				scaleUpAnimateSecond.target = secondOrb;
+				
+				scaleUpAnimateFirst.play();
+				scaleUpAnimateSecond.play();
+				
+				
+				var firstIndex:int = gameGroup.getElementIndex(firstOrb);
+				var secondIndex:int = gameGroup.getElementIndex(secondOrb);
+				
+				gameGroup.setElementIndex(firstOrb, secondIndex);
+				gameGroup.setElementIndex(secondOrb, firstIndex);
+				
+			}
+			
+			private function scaleUpDone(event:EffectEvent):void{
+				firstOrb = null;
+				secondOrb = null;
+				checkForGroups();
+			}
+
+			private function checkForGroups():void{
+				
+				//Check Rows
+				for (var row:int = 0;row<numColsAndRows;row++){
+					var firstOrb:Orb = gameGroup.getElementAt(getIndexFromCoord(0, row)) as Orb;
+					var image:BitmapImage = firstOrb.image;
+					var allMatch:Boolean = true;
+					for (var col:int = 1;col<numColsAndRows;col++){
+						var index:int = getIndexFromCoord(col, row);
+						var orb:Orb = gameGroup.getElementAt(index) as Orb;
+						if (orb.image.source != image.source) {
+							allMatch = false;
+							break;
+						}
+					}
+					if (allMatch){
+						updateScore();
+						for (var col:int = 0;col<numColsAndRows;col++){
+							trace("col: " + col + " row: " + row);
+							
+							var orbToMove:Orb = gameGroup.getElementAt(getIndexFromCoord(col, row)) as Orb;
+							var animation:Animate = createExitAnimation(orbToMove, true);
+							if (col == numColsAndRows-1){
+								animation.addEventListener(EffectEvent.EFFECT_END, exitEnd);
+							}
+							animation.play();
+						}
+					}
+				}
+				
+				//Check Comlumns
+				for (var col:int = 0;col<numColsAndRows;col++){
+					var firstOrb:Orb = gameGroup.getElementAt(getIndexFromCoord(col, 0)) as Orb;
+					var image:BitmapImage = firstOrb.image;
+					var allMatch:Boolean = true;
+					for (var row:int = 1;row<numColsAndRows;row++){
+						var index:int = getIndexFromCoord(col, row);
+						var orb:Orb = gameGroup.getElementAt(index) as Orb;
+						if (orb.image.source != image.source) {
+							allMatch = false;
+							break;
+						}
+					}
+					if (allMatch){
+						updateScore();
+						for (var row:int = 0;row<numColsAndRows;row++){
+							var orbToMove:Orb = gameGroup.getElementAt(getIndexFromCoord(col, row)) as Orb;
+							var animation:Animate = createExitAnimation(orbToMove, false);
+							if (row == numColsAndRows-1){
+								animation.addEventListener(EffectEvent.EFFECT_END, exitEnd);
+							}
+							animation.play();
+						}
+					}
+				}
+				
+			}
+			
+			private function createExitAnimation(orb:Orb,goingRight:Boolean):Animate{
+				
+				var scaleXS:Keyframe = new Keyframe(0, orb.scaleX);
+				var scaleXE:Keyframe = new Keyframe(500, orb.scaleX/4);
+				
+				var scaleYS:Keyframe = new Keyframe(0, orb.scaleY);
+				var scaleYE:Keyframe = new Keyframe(500, orb.scaleY/4);
+				
+				var scaleX:MotionPath = new MotionPath("scaleX");
+				scaleX.keyframes = new Vector.<Keyframe>();
+				scaleX.keyframes.push(scaleXS);
+				scaleX.keyframes.push(scaleXE);
+				
+				var scaleY:MotionPath = new MotionPath("scaleY");
+				scaleY.keyframes = new Vector.<Keyframe>();
+				scaleY.keyframes.push(scaleYS);
+				scaleY.keyframes.push(scaleYE);
+				
+				var trans:MotionPath;
+				
+				if (goingRight){
+					var transS:Keyframe = new Keyframe(500, orb.x);
+					var transE:Keyframe = new Keyframe(1000, orb.x+this.parent.width);
+					
+					trans = new MotionPath("x");
+					trans.keyframes = new Vector.<Keyframe>();
+					trans.keyframes.push(transS, transE);
+				} else {
+					var transS:Keyframe = new Keyframe(500, orb.y);
+					var transE:Keyframe = new Keyframe(1000, orb.y+this.parent.height);
+					
+					trans = new MotionPath("y");
+					trans.keyframes = new Vector.<Keyframe>();
+					trans.keyframes.push(transS, transE);
+				}
+				
+				
+				var animation:Animate = new Animate(orb);
+				animation.motionPaths = new Vector.<MotionPath>();
+				animation.motionPaths.push(scaleX);
+				animation.motionPaths.push(scaleY);
+				animation.motionPaths.push(trans);
+				
+				animation.addEventListener(EffectEvent.EFFECT_END, endOrbExit);
+				return animation;
+			}
+			
+			private function endOrbExit(event:EffectEvent):void{
+				var animation:Animate = event.target as Animate;
+				var oldOrb:Orb = animation.target as Orb;
+				
+				if (oldOrb.parent){//we might have already done this if oldOrb is at the center of a cross.
+					var index:int = gameGroup.getElementIndex(oldOrb);
+					gameGroup.removeElementAt(index);
+					
+					var image:BitmapImage = new BitmapImage();
+					image.source = randomImage();
+					var orb:Orb = new Orb(image);
+					
+					gameGroup.addElementAt(orb,index);
+				}
+			}
+			
+			private function exitEnd(event:EffectEvent):void{
+				layoutOrbs();
+			 	checkForGroups();
+			}
+			
+			private function updateScore():void{
+				score++;
+				if (score > highScore){
+					highScore = score;
+					sharedObj.data.highScore = highScore;
+					sharedObj.flush();
+				}
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<s:Rect width="100%" height="100%">
+		<s:fill><s:SolidColor color="0x555555" /></s:fill>
+	</s:Rect>
+
+	<s:Group y="5" x="5"> 
+		<s:layout>
+			<s:TileLayout>
+				<s:requestedColumnCount>2</s:requestedColumnCount>
+			</s:TileLayout>
+		</s:layout>
+		<s:Label text="Score:"/>
+		<s:Label id="scoreLabel" text="{score}"/>
+		<s:Label text="High Score:"/>
+		<s:Label id="highScoreLabel" text="{highScore}"/>
+	</s:Group>
+	
+	<s:Group id="gameGroup" y="40" x="20" click="clicked(event)">
+		<s:Rect width="100%" height="100%">
+			<s:fill><s:SolidColor color="0x999999" /></s:fill>
+		</s:Rect>
+	</s:Group>
+	
+</s:Group>

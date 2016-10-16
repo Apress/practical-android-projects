@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/scrollview_main"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:fillViewport="true">
+  <LinearLayout android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/linearlayout_main">
+    <EditText android:layout_height="wrap_content"
+              android:layout_width="fill_parent"
+              android:id="@+id/edittext_input"></EditText>
+    <LinearLayout android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:background="@android:drawable/bottom_bar"
+                  android:gravity="center_vertical">
+      <Button android:id="@+id/button_run_async"
+              android:layout_width="0dip"
+              android:layout_weight="2.0"
+              android:layout_height="wrap_content"
+              android:text="@string/button_run_async_text_wait"></Button>
+      <Button android:id="@+id/button_run_sync"
+              android:layout_width="0dip"
+              android:layout_weight="2.0"
+              android:layout_height="wrap_content"
+              android:text="@string/button_run_sync_text_wait"></Button>
+      <Button android:id="@+id/button_clear"
+              android:layout_width="0dip"
+              android:layout_weight="1.0"
+              android:layout_height="wrap_content"
+              android:text="@string/button_clear_text"></Button>
+    </LinearLayout>
+    <TextView android:layout_height="wrap_content"
+              android:layout_width="fill_parent"
+              android:id="@+id/textview_output"></TextView>
+  </LinearLayout>
+</ScrollView>

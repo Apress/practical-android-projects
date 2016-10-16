@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+            android:id="@+id/menu_itm_snippets_load"
+            android:icon="@drawable/mnu_load_snippets"
+            android:title="@string/menu_snippets_load">
+    </item>
+    <item
+            android:id="@+id/menu_itm_startup_script_load"
+            android:icon="@drawable/mnu_startup_script_load"
+            android:title="@string/menu_startup_script_load">
+    </item>
+    <item
+            android:id="@+id/menu_itm_startup_script_save"
+            android:icon="@drawable/mnu_startup_script_save"
+            android:title="@string/menu_startup_script_save">
+    </item>
+</menu>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:background="#00000000"
+  >
+	<view class="org.ljordan.orb_quest.AboutView"
+		android:id="@+id/gameView"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+	/>
+
+	<LinearLayout
+  		android:layout_width="fill_parent"
+ 		android:layout_height="fill_parent"
+ 		android:gravity="center"
+ 		android:orientation="vertical"
+ 		>
+ 		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textSize="24px"
+			android:text="@string/about_text_title"
+			android:textColor="#000000"
+  		/>
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/about_text"
+			android:textColor="#000000"
+			android:padding="30px"
+  		/>
+	</LinearLayout>
+	 
+</FrameLayout>
